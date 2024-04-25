@@ -4,4 +4,33 @@ Running: D:/Xilinx/Vivado/2018.2/bin/unwrapped/win64.o/xelab.exe -wto ac41be66f1
 Using 2 slave threads.
 Starting static elaboration
 Completed static elaboration
-INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package std.standard
+Compiling package std.textio
+Compiling package ieee.std_logic_1164
+Compiling package ieee.numeric_std
+Compiling architecture behavioral of entity xil_defaultlib.Slow_Clk [slow_clk_default]
+Compiling architecture behavioral of entity xil_defaultlib.Decoder_2_to_4 [decoder_2_to_4_default]
+Compiling architecture behavioral of entity xil_defaultlib.Decoder_3_to_8 [decoder_3_to_8_default]
+Compiling architecture behavioral of entity xil_defaultlib.D_FF [d_ff_default]
+Compiling architecture behavioral of entity xil_defaultlib.Register_4bit [register_4bit_default]
+Compiling architecture behavioral of entity xil_defaultlib.Register_Bank [register_bank_default]
+Compiling architecture behavioral of entity xil_defaultlib.Eight_way_4_bit_Mux [eight_way_4_bit_mux_default]
+Compiling architecture behavioral of entity xil_defaultlib.HA [ha_default]
+Compiling architecture behavioral of entity xil_defaultlib.FA [fa_default]
+Compiling architecture behavioral of entity xil_defaultlib.Add_Sub_Unit [add_sub_unit_default]
+Compiling architecture behavioral of entity xil_defaultlib.four_way_4_bit_mux [four_way_4_bit_mux_default]
+Compiling architecture behavioral of entity xil_defaultlib.Instruction_Decoder [instruction_decoder_default]
+Compiling architecture behavioral of entity xil_defaultlib.Three_Bit_Adder [three_bit_adder_default]
+Compiling architecture behavioral of entity xil_defaultlib.Two_way_3_bit_Mux [two_way_3_bit_mux_default]
+Compiling architecture behavioral of entity xil_defaultlib.Multiplier_2 [multiplier_2_default]
+Compiling architecture behavioral of entity xil_defaultlib.Comparator_4bit [comparator_4bit_default]
+Compiling architecture behavioral of entity xil_defaultlib.Program_ROM [program_rom_default]
+Compiling architecture behavioral of entity xil_defaultlib.Program_counter [program_counter_default]
+Compiling architecture behavioral of entity xil_defaultlib.LUT_16_7 [lut_16_7_default]
+Compiling architecture behavioral of entity xil_defaultlib.AU_7_seg [au_7_seg_default]
+Compiling architecture behavioral of entity xil_defaultlib.CPU [cpu_default]
+Compiling architecture behavioral of entity xil_defaultlib.cpu_tb
+Built simulation snapshot CPU_TB_behav

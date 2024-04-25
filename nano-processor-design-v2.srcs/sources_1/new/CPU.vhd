@@ -45,6 +45,7 @@ entity CPU is
 --               reg_6_out_check : out STD_LOGIC_VECTOR (3 downto 0);
 --               reg_7_out_check : out STD_LOGIC_VECTOR (3 downto 0);
            S_LED : out STD_LOGIC_VECTOR (3 downto 0);
+           C_LED : out STD_LOGIC_VECTOR (2 downto 0);
            S_7Seg : out STD_LOGIC_VECTOR (6 downto 0);
            an : out STD_LOGIC_VECTOR (3 downto 0);
            carry : out STD_LOGIC;
@@ -111,23 +112,24 @@ component Register_Bank is
                 In1 : in STD_LOGIC_VECTOR (3 downto 0);
                 In2 : in STD_LOGIC_VECTOR (3 downto 0);
                 In3 : in STD_LOGIC_VECTOR (3 downto 0);
-                output : out STD_LOGIC_VECTOR (3 downto 0);
-                Sel : in STD_LOGIC_VECTOR (1 downto 0));
+                Sel : in STD_LOGIC_VECTOR (1 downto 0);
+                output : out STD_LOGIC_VECTOR (3 downto 0));
      end component;
      
      -- component of the instruction decoder
      component Instruction_Decoder is
              Port ( 
-                Ins_Bus : in STD_LOGIC_VECTOR (11 downto 0);
+                Ins_Bus : in STD_LOGIC_VECTOR (12 downto 0);
                 Reg_Chk_Jmp : in STD_LOGIC_VECTOR (3 downto 0);
                 Reg_En : out STD_LOGIC_VECTOR (2 downto 0);
-                Load_Sel : out STD_LOGIC;
+                Load_Sel : out STD_LOGIC_VECTOR (1 downto 0);
                 Imm_Val : out STD_LOGIC_VECTOR (3 downto 0);
                 Reg_Sel1 : out STD_LOGIC_VECTOR (2 downto 0);
                 Reg_Sel2 : out STD_LOGIC_VECTOR (2 downto 0);
                 Add_Sub_Sel : out STD_LOGIC;
                 Jmp : out STD_LOGIC;
-                Jmp_Add : out STD_LOGIC_VECTOR (2 downto 0));
+                Jmp_Add : out STD_LOGIC_VECTOR (2 downto 0);
+                Comp : out STD_LOGIC);
       end component;
       
       -- component of the three bit adder for incrementing the PC
@@ -153,7 +155,7 @@ component Register_Bank is
        -- all the instructions are stored here
        component Program_ROM
               Port ( address : in STD_LOGIC_VECTOR (2 downto 0);
-                     data : out STD_LOGIC_VECTOR (11 downto 0));
+                     data : out STD_LOGIC_VECTOR (12 downto 0));
           end component;
           
        -- component of the Program Counter
@@ -187,28 +189,50 @@ component Register_Bank is
                    B : in STD_LOGIC_VECTOR (1 downto 0);
                    Y : out STD_LOGIC_VECTOR (3 downto 0));
         end component;
+        
+        -- component for the comparator unit
+        component Comparator_4bit is
+            Port ( Num1 : in STD_LOGIC_VECTOR (3 downto 0);
+                   Num2 : in STD_LOGIC_VECTOR (3 downto 0);
+                   GreaterThan : out STD_LOGIC;
+                   Equal : out STD_LOGIC;                  
+                   LesserThan : out STD_LOGIC;
+                   Num_out : out STD_LOGIC_VECTOR (3 downto 0));
+        end component;
     
         --Control Signals
         Signal Reg_EN, Eight_way_mux0_Sel, Eight_way_mux1_Sel, Ins_Address_frm_Pgrm, Memory_Selector, Ins_Address_frm_Adder, PC_in : STD_LOGIC_VECTOR(2 downto 0);
-        Signal Add_Sub_Sel, LoadSel, JumpFlag, Carry_of_PC_adder : STD_LOGIC;
+        Signal Add_Sub_Sel, JumpFlag, Carry_of_PC_adder : STD_LOGIC;
+        Signal LoadSel : STD_LOGIC_VECTOR (1 downto 0);  -- load selector for the 4 way 4 bit mux
     
         --Data Signals
         --RegisterBank
         Signal D, R_0_out, R_1_out, R_2_out, R_3_out, R_4_out, R_5_out, R_6_out, R_7_out : STD_LOGIC_VECTOR(3 downto 0);
     
         --Add/Sub Unit
-        Signal Eight_way_mux0_out, Eight_way_mux1_out, R : STD_LOGIC_VECTOR(3 downto 0);
+        Signal Eight_way_mux0_out, Eight_way_mux1_out : STD_LOGIC_VECTOR(3 downto 0);
+        signal R : STD_LOGIC_VECTOR(3 downto 0);  -- output of the add/sub unit
+        signal N : STD_LOGIC_VECTOR(3 downto 0);  -- output of the multiplier
+        signal P : STD_LOGIC_VECTOR(3 downto 0);  -- output of the comparator
         Signal NegPos: STD_LOGIC;
         Signal Slow_Clk_Sig: STD_LOGIC;
     
         --Instruction Decoder
-        Signal M : STD_LOGIC_VECTOR(3 downto 0);
-        Signal I : STD_LOGIC_VECTOR(11 downto 0);
+        Signal M : STD_LOGIC_VECTOR(3 downto 0);  -- immidiate value
+        Signal I : STD_LOGIC_VECTOR(12 downto 0);
+        
+        Signal comp_activ : STD_LOGIC; -- select to happen the comapare
         
         --Seven Segment Display
         Signal S_LED_Sig : STD_LOGIC_VECTOR (3 downto 0);
         Signal S_7Seg_Sig : STD_LOGIC_VECTOR (6 downto 0);
         Signal an_Sig : STD_LOGIC_VECTOR (3 downto 0);
+        
+        --Outputs of the Comparator
+        Signal GreaterThan_sig: STD_LOGIC;
+        Signal Equal_sig: STD_LOGIC;
+        Signal LesserThan_sig: STD_LOGIC;
+        
 
 begin
 
@@ -229,20 +253,27 @@ mux_8_way_4bit_1 : Eight_way_4_bit_Mux
 add_sub_unit_4bit : Add_Sub_Unit
     port map(Eight_way_mux0_out, Eight_way_mux1_out, Add_Sub_Sel, R, carry, NegPos, zero);
     
-mux_2_way_4bit : Two_way_4_bit_Mux
-    port map(M, R, LoadSel, D);
+--mux_2_way_4bit : Two_way_4_bit_Mux
+--    port map(M, R, LoadSel, D);
     
 mux_4_way_4_bit : four_way_4_bit_mux
-    port map()
+    port map(M, R, N, P, LoadSel, D);
     
 Ins_dec : Instruction_Decoder
-    port map(I, Eight_way_mux0_out, Reg_EN, LoadSel, M, Eight_way_mux0_Sel, Eight_way_mux1_Sel, Add_Sub_Sel, JumpFlag, Ins_Address_frm_Pgrm);
+    port map(I, Eight_way_mux0_out, Reg_EN, LoadSel, M, Eight_way_mux0_Sel, Eight_way_mux1_Sel, Add_Sub_Sel, JumpFlag, Ins_Address_frm_Pgrm, comp_activ);
     
 adder_3bit : Three_Bit_Adder
     port map(Memory_Selector, "001", '0', Ins_Address_frm_Adder, Carry_of_PC_adder);
     
 mux_2_way_3bit : Two_way_3_bit_MuX
-    port map(Ins_Address_frm_Adder, Ins_Address_frm_Pgrm, JumpFlag, PC_in);
+    port map(Ins_Address_frm_Adder, Ins_Address_frm_Pgrm, JumpFlag, PC_in);    
+    
+multiplier_unit : Multiplier_2
+    port map(Eight_way_mux0_out (1 downto 0), Eight_way_mux1_out(1 downto 0), N);
+    
+comparator_unit : Comparator_4bit 
+    port map (Eight_way_mux0_out, Eight_way_mux1_out, GreaterThan_sig, Equal_sig, LesserThan_sig, P);
+    
    
 PROM : Program_ROM
     port map(Memory_Selector, I);
@@ -256,6 +287,10 @@ Seven_Segment : AU_7_seg
     S_LED <= S_LED_Sig;
     S_7Seg <= S_7Seg_Sig;
     an <= an_Sig;
+    
+    C_LED(0) <= GreaterThan_sig AND comp_activ;
+    C_LED(1) <= Equal_sig AND comp_activ; 
+    C_LED(2) <= LesserThan_sig AND comp_activ;
 
 --    reg_0_out_check <= R_0_out; -- these lines are connected with the signals in the entity
 --    reg_1_out_check <= R_1_out; -- declaration or uncomment only if the previously mentioned signsld are

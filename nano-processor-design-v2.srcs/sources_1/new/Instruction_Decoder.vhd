@@ -31,7 +31,8 @@ entity Instruction_Decoder is
            Reg_Sel2 : out STD_LOGIC_VECTOR (2 downto 0);
            Add_Sub_Sel : out STD_LOGIC;
            Jmp : out STD_LOGIC;
-           Jmp_Add : out STD_LOGIC_VECTOR (2 downto 0));
+           Jmp_Add : out STD_LOGIC_VECTOR (2 downto 0);
+           Comp : out STD_LOGIC);
 end Instruction_Decoder;
 
 architecture Behavioral of Instruction_Decoder is
@@ -42,24 +43,27 @@ begin
         case Ins_Bus(12 downto 10) is
             -- connectiong to different lines based o the instruction type
             when "000" =>  -- add
-                Load_Sel <= "11";
+                Load_Sel <= "01";
                 Reg_Sel1 <= Ins_Bus(9 downto 7);
                 Reg_Sel2 <= Ins_Bus(6 downto 4);
                 Add_Sub_Sel <= '0';
                 Jmp <= '0';
+                comp <= '0';
                 
             when "001" =>  -- negation
-                Load_Sel <= "11";
+                Load_Sel <= "01";
                 Reg_Sel1 <= "000";
                 Add_Sub_Sel <= '1';
                 Reg_Sel2 <= Ins_Bus(9 downto 7);
                 Jmp <= '0';
                 Add_Sub_Sel <= '1';
+                comp <= '0';
                 
             when "010" =>  -- move
                 Load_Sel <= "00";
                 Imm_Val <= Ins_Bus(3 downto 0);
                 Jmp <= '0';
+                comp <= '0';
             
             when "011" =>  -- jump
                 Load_Sel <= "00";
@@ -68,14 +72,24 @@ begin
                 if (Reg_Chk_Jmp = "0000") then
                     Jmp <= '1';
                     Jmp_Add <= Ins_Bus(2 downto 0);
+                    comp <= '0';
                 else
                     Jmp <= '0';
+                    comp <= '0';
                 end if;
                 
             when "100" =>  -- multiply
                 Load_Sel <= "10";
                 Reg_Sel1 <= Ins_Bus(9 downto 7);
                 Reg_Sel2 <= Ins_Bus(6 downto 4);
+                Jmp <= '0';
+                comp <= '0';
+                
+            when "101" =>  -- compare
+                Load_Sel <= "11";
+                Reg_Sel1 <= Ins_Bus(9 downto 7);
+                Reg_Sel2 <= Ins_Bus(6 downto 4);
+                comp <= '1';
                 Jmp <= '0';
                 
             when others =>
