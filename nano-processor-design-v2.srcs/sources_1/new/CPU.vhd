@@ -106,6 +106,15 @@ component Register_Bank is
                 Output : out STD_LOGIC_VECTOR (3 downto 0));
      end component;
      
+     component four_way_4_bit_mux is
+         Port ( In0 : in STD_LOGIC_VECTOR (3 downto 0);
+                In1 : in STD_LOGIC_VECTOR (3 downto 0);
+                In2 : in STD_LOGIC_VECTOR (3 downto 0);
+                In3 : in STD_LOGIC_VECTOR (3 downto 0);
+                output : out STD_LOGIC_VECTOR (3 downto 0);
+                Sel : in STD_LOGIC_VECTOR (1 downto 0));
+     end component;
+     
      -- component of the instruction decoder
      component Instruction_Decoder is
              Port ( 
@@ -171,6 +180,13 @@ component Register_Bank is
             Port ( Clk_in : in STD_LOGIC;
                    Clk_out : out STD_LOGIC);
         end component;
+        
+        -- component for 2 bit multiplier
+        component Multiplier_2 is
+            Port ( A : in STD_LOGIC_VECTOR (1 downto 0);
+                   B : in STD_LOGIC_VECTOR (1 downto 0);
+                   Y : out STD_LOGIC_VECTOR (3 downto 0));
+        end component;
     
         --Control Signals
         Signal Reg_EN, Eight_way_mux0_Sel, Eight_way_mux1_Sel, Ins_Address_frm_Pgrm, Memory_Selector, Ins_Address_frm_Adder, PC_in : STD_LOGIC_VECTOR(2 downto 0);
@@ -215,6 +231,9 @@ add_sub_unit_4bit : Add_Sub_Unit
     
 mux_2_way_4bit : Two_way_4_bit_Mux
     port map(M, R, LoadSel, D);
+    
+mux_4_way_4_bit : four_way_4_bit_mux
+    port map()
     
 Ins_dec : Instruction_Decoder
     port map(I, Eight_way_mux0_out, Reg_EN, LoadSel, M, Eight_way_mux0_Sel, Eight_way_mux1_Sel, Add_Sub_Sel, JumpFlag, Ins_Address_frm_Pgrm);
