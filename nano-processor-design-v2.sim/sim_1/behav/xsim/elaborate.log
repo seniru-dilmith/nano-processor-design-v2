@@ -1,0 +1,9 @@
+Vivado Simulator 2018.2
+Copyright 1986-1999, 2001-2018 Xilinx, Inc. All Rights Reserved.
+Running: D:/Xilinx/Vivado/2018.2/bin/unwrapped/win64.o/xelab.exe -wto ac41be66f13c4bb3b0e6a2d45fee4198 --incr --debug typical --relax --mt 2 -L xil_defaultlib -L secureip --snapshot CPU_TB_behav xil_defaultlib.CPU_TB -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+WARNING: [VRFC 10-122] decoder_2_to_4 remains a black-box since it has no binding entity [D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sources_1/new/Decoder_3_to_8.vhd:55]
+WARNING: [VRFC 10-122] decoder_2_to_4 remains a black-box since it has no binding entity [D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sources_1/new/Decoder_3_to_8.vhd:61]
+Completed static elaboration
+INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
