@@ -2,14 +2,14 @@
 2018.2
 Jun 14 2018
 20:41:02
-D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sim_1/new/CPU_TB.vhd,1714749221,vhdl,,,,cpu_tb,,,,,,,,
+D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sim_1/new/CPU_TB.vhd,1714751164,vhdl,,,,cpu_tb,,,,,,,,
 D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sim_1/new/L_Bit_Shift_TB.vhd,1714747120,vhdl,,,,l_bit_shift_tb,,,,,,,,
 D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sim_1/new/R_Bit_Shift_TB.vhd,1714747595,vhdl,,,,r_bit_shift_tb,,,,,,,,
 D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sim_1/new/TB_Multiplier_2.vhd,1709035891,vhdl,,,,tb_multiplier_2,,,,,,,,
 D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sim_1/new/comparator_4bit_TB.vhd,1714075483,vhdl,,,,comparator_4bit_tb,,,,,,,,
 D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sources_1/new/AU_7_seg.vhd,1714051914,vhdl,,,,au_7_seg,,,,,,,,
 D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sources_1/new/Add_Sub_Unit.vhd,1714051914,vhdl,,,,add_sub_unit,,,,,,,,
-D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sources_1/new/CPU.vhd,1714749593,vhdl,,,,cpu,,,,,,,,
+D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sources_1/new/CPU.vhd,1714751134,vhdl,,,,cpu,,,,,,,,
 D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sources_1/new/D_FF.vhd,1713618974,vhdl,,,,d_ff,,,,,,,,
 D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sources_1/new/Decoder_2_to_4.vhd,1708367345,vhdl,,,,decoder_2_to_4,,,,,,,,
 D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sources_1/new/Decoder_3_to_8.vhd,1713618974,vhdl,,,,decoder_3_to_8,,,,,,,,
@@ -28,6 +28,4 @@ D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Proce
 D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sources_1/new/Slow_Clk.vhd,1714744334,vhdl,,,,slow_clk,,,,,,,,
 D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sources_1/new/Three_BIt_Adder.vhd,1714051914,vhdl,,,,three_bit_adder,,,,,,,,
 D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sources_1/new/Two_way_3_bit_Mux.vhd,1713618982,vhdl,,,,two_way_3_bit_mux,,,,,,,,
-D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sources_1/new/Two_way_4_bit_Mux.vhd,1714051914,vhdl,,,,two_way_4_bit_mux,,,,,,,,
 D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sources_1/new/comparator_4bit.vhd,1714075692,vhdl,,,,comparator_4bit,,,,,,,,
-D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sources_1/new/four_way_4_bit_mux.vhd,1714064527,vhdl,,,,four_way_4_bit_mux,,,,,,,,

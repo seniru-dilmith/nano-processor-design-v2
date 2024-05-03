@@ -36,14 +36,14 @@ entity CPU is
     Port ( Clk : in STD_LOGIC;
 --           Slow_Clk_check : out STD_LOGIC;
            Reset : in STD_LOGIC;
-               reg_0_out_check : out STD_LOGIC_VECTOR (3 downto 0); -- these lines commented out for further checkings
-               reg_1_out_check : out STD_LOGIC_VECTOR (3 downto 0); -- of the register values, if unncessary, can be removed
-               reg_2_out_check : out STD_LOGIC_VECTOR (3 downto 0);
-               reg_3_out_check : out STD_LOGIC_VECTOR (3 downto 0);
-               reg_4_out_check : out STD_LOGIC_VECTOR (3 downto 0);
-               reg_5_out_check : out STD_LOGIC_VECTOR (3 downto 0);
-               reg_6_out_check : out STD_LOGIC_VECTOR (3 downto 0);
-               reg_7_out_check : out STD_LOGIC_VECTOR (3 downto 0);
+--               reg_0_out_check : out STD_LOGIC_VECTOR (3 downto 0); -- these lines commented out for further checkings
+--               reg_1_out_check : out STD_LOGIC_VECTOR (3 downto 0); -- of the register values, if unncessary, can be removed
+--               reg_2_out_check : out STD_LOGIC_VECTOR (3 downto 0);
+--               reg_3_out_check : out STD_LOGIC_VECTOR (3 downto 0);
+--               reg_4_out_check : out STD_LOGIC_VECTOR (3 downto 0);
+--               reg_5_out_check : out STD_LOGIC_VECTOR (3 downto 0);
+--               reg_6_out_check : out STD_LOGIC_VECTOR (3 downto 0);
+--               reg_7_out_check : out STD_LOGIC_VECTOR (3 downto 0);
            S_LED : out STD_LOGIC_VECTOR (3 downto 0);
            C_LED : out STD_LOGIC_VECTOR (2 downto 0);
            S_7Seg : out STD_LOGIC_VECTOR (6 downto 0);
@@ -316,13 +316,13 @@ Seven_Segment : AU_7_seg
     C_LED(1) <= Equal_sig AND comp_activ; 
     C_LED(2) <= LesserThan_sig AND comp_activ;
 
-    reg_0_out_check <= R_0_out; -- these lines are connected with the signals in the entity
-    reg_1_out_check <= R_1_out; -- declaration or uncomment only if the previously mentioned signsld are
-    reg_2_out_check <= R_2_out; -- uncommented
-    reg_3_out_check <= R_3_out;
-    reg_4_out_check <= R_4_out;
-    reg_5_out_check <= R_5_out;
-    reg_6_out_check <= R_6_out;
-    reg_7_out_check <= R_7_out;
+--    reg_0_out_check <= R_0_out; -- these lines are connected with the signals in the entity
+--    reg_1_out_check <= R_1_out; -- declaration or uncomment only if the previously mentioned signsld are
+--    reg_2_out_check <= R_2_out; -- uncommented
+--    reg_3_out_check <= R_3_out;
+--    reg_4_out_check <= R_4_out;
+--    reg_5_out_check <= R_5_out;
+--    reg_6_out_check <= R_6_out;
+--    reg_7_out_check <= R_7_out;
 
 end Behavioral;

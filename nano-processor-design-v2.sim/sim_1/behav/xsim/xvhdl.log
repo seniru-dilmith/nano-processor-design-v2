@@ -1,2 +1,4 @@
-INFO: [VRFC 10-163] Analyzing VHDL file "D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sources_1/new/Instruction_Decoder.vhd" into library xil_defaultlib
-INFO: [VRFC 10-307] analyzing entity Instruction_Decoder
+INFO: [VRFC 10-163] Analyzing VHDL file "D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sources_1/new/CPU.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU
+INFO: [VRFC 10-163] Analyzing VHDL file "D:/Xilinx/Vivado/projects/Nano_Processor_Design/Nano_Processor_Design/Nano_Processor_Design/nano-processor-design-v2/nano-processor-design-v2.srcs/sim_1/new/CPU_TB.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity CPU_TB
