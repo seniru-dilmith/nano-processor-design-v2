@@ -25,7 +25,7 @@ entity Instruction_Decoder is
     Port ( Ins_Bus : in STD_LOGIC_VECTOR (12 downto 0);
            Reg_Chk_Jmp : in STD_LOGIC_VECTOR (3 downto 0);
            Reg_En : out STD_LOGIC_VECTOR (2 downto 0);
-           Load_Sel : out STD_LOGIC_VECTOR (1 downto 0);
+           Load_Sel : out STD_LOGIC_VECTOR (2 downto 0);
            Imm_Val : out STD_LOGIC_VECTOR (3 downto 0);
            Reg_Sel1 : out STD_LOGIC_VECTOR (2 downto 0);
            Reg_Sel2 : out STD_LOGIC_VECTOR (2 downto 0);
@@ -43,7 +43,7 @@ begin
         case Ins_Bus(12 downto 10) is
             -- connectiong to different lines based o the instruction type
             when "000" =>  -- add
-                Load_Sel <= "01";
+                Load_Sel <= "001";
                 Reg_Sel1 <= Ins_Bus(9 downto 7);
                 Reg_Sel2 <= Ins_Bus(6 downto 4);
                 Add_Sub_Sel <= '0';
@@ -51,7 +51,7 @@ begin
                 comp <= '0';
                 
             when "001" =>  -- negation
-                Load_Sel <= "01";
+                Load_Sel <= "001";
                 Reg_Sel1 <= "000";
                 Add_Sub_Sel <= '1';
                 Reg_Sel2 <= Ins_Bus(9 downto 7);
@@ -60,13 +60,13 @@ begin
                 comp <= '0';
                 
             when "010" =>  -- move
-                Load_Sel <= "00";
+                Load_Sel <= "000";
                 Imm_Val <= Ins_Bus(3 downto 0);
                 Jmp <= '0';
                 comp <= '0';
             
             when "011" =>  -- jump
-                Load_Sel <= "00";
+                Load_Sel <= "000";
                 Reg_Sel1 <= Ins_Bus(9 downto 7);
                 Imm_Val <= Reg_Chk_Jmp;
                 if (Reg_Chk_Jmp = "0000") then
@@ -79,23 +79,33 @@ begin
                 end if;
                 
             when "100" =>  -- multiply
-                Load_Sel <= "10";
+                Load_Sel <= "010";
                 Reg_Sel1 <= Ins_Bus(9 downto 7);
                 Reg_Sel2 <= Ins_Bus(6 downto 4);
                 Jmp <= '0';
                 comp <= '0';
                 
             when "101" =>  -- compare
-                Load_Sel <= "11";
+                Load_Sel <= "011";
                 Reg_Sel1 <= Ins_Bus(9 downto 7);
                 Reg_Sel2 <= Ins_Bus(6 downto 4);
                 comp <= '1';
                 Jmp <= '0';
                 
---            when "110" =>
-            
---            when "111" => 
-            
+            when "110" =>  --left bit shift
+                Load_Sel <= "100";
+                Reg_Sel1 <= Ins_Bus(9 downto 7);
+                Reg_Sel2 <= "000";
+                comp <= '0';
+                Jmp <= '0'; 
+                          
+            when "111" =>  -- right bit shift
+                Load_Sel <= "101";
+                Reg_Sel1 <= Ins_Bus(9 downto 7);
+                Reg_Sel2 <= "000";
+                comp <= '0';
+                Jmp <= '0';          
+                   
             when others =>
                 -- all the possible cases are mentioned sbove
         end case;

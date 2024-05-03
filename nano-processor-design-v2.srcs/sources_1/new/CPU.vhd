@@ -36,14 +36,14 @@ entity CPU is
     Port ( Clk : in STD_LOGIC;
 --           Slow_Clk_check : out STD_LOGIC;
            Reset : in STD_LOGIC;
---               reg_0_out_check : out STD_LOGIC_VECTOR (3 downto 0); -- these lines commented out for further checkings
---               reg_1_out_check : out STD_LOGIC_VECTOR (3 downto 0); -- of the register values, if unncessary, can be removed
---               reg_2_out_check : out STD_LOGIC_VECTOR (3 downto 0);
---               reg_3_out_check : out STD_LOGIC_VECTOR (3 downto 0);
---               reg_4_out_check : out STD_LOGIC_VECTOR (3 downto 0);
---               reg_5_out_check : out STD_LOGIC_VECTOR (3 downto 0);
---               reg_6_out_check : out STD_LOGIC_VECTOR (3 downto 0);
---               reg_7_out_check : out STD_LOGIC_VECTOR (3 downto 0);
+               reg_0_out_check : out STD_LOGIC_VECTOR (3 downto 0); -- these lines commented out for further checkings
+               reg_1_out_check : out STD_LOGIC_VECTOR (3 downto 0); -- of the register values, if unncessary, can be removed
+               reg_2_out_check : out STD_LOGIC_VECTOR (3 downto 0);
+               reg_3_out_check : out STD_LOGIC_VECTOR (3 downto 0);
+               reg_4_out_check : out STD_LOGIC_VECTOR (3 downto 0);
+               reg_5_out_check : out STD_LOGIC_VECTOR (3 downto 0);
+               reg_6_out_check : out STD_LOGIC_VECTOR (3 downto 0);
+               reg_7_out_check : out STD_LOGIC_VECTOR (3 downto 0);
            S_LED : out STD_LOGIC_VECTOR (3 downto 0);
            C_LED : out STD_LOGIC_VECTOR (2 downto 0);
            S_7Seg : out STD_LOGIC_VECTOR (6 downto 0);
@@ -122,7 +122,7 @@ component Register_Bank is
                 Ins_Bus : in STD_LOGIC_VECTOR (12 downto 0);
                 Reg_Chk_Jmp : in STD_LOGIC_VECTOR (3 downto 0);
                 Reg_En : out STD_LOGIC_VECTOR (2 downto 0);
-                Load_Sel : out STD_LOGIC_VECTOR (1 downto 0);
+                Load_Sel : out STD_LOGIC_VECTOR (2 downto 0);
                 Imm_Val : out STD_LOGIC_VECTOR (3 downto 0);
                 Reg_Sel1 : out STD_LOGIC_VECTOR (2 downto 0);
                 Reg_Sel2 : out STD_LOGIC_VECTOR (2 downto 0);
@@ -199,11 +199,23 @@ component Register_Bank is
                    LesserThan : out STD_LOGIC;
                    Num_out : out STD_LOGIC_VECTOR (3 downto 0));
         end component;
+        
+        -- component for the left bit shifter
+        component L_Bit_Shift is
+            Port ( Data_In : in STD_LOGIC_VECTOR (3 downto 0);
+                   Data_Out : out STD_LOGIC_VECTOR (3 downto 0));
+        end component;
+        
+        -- component for the right bit shifter
+        component R_Bit_Shift is
+            Port ( Data_In : in STD_LOGIC_VECTOR (3 downto 0);
+                   Data_Out : out STD_LOGIC_VECTOR (3 downto 0));
+        end component;
     
         --Control Signals
         Signal Reg_EN, Eight_way_mux0_Sel, Eight_way_mux1_Sel, Ins_Address_frm_Pgrm, Memory_Selector, Ins_Address_frm_Adder, PC_in : STD_LOGIC_VECTOR(2 downto 0);
         Signal Add_Sub_Sel, JumpFlag, Carry_of_PC_adder : STD_LOGIC;
-        Signal LoadSel : STD_LOGIC_VECTOR (1 downto 0);  -- load selector for the 4 way 4 bit mux
+        Signal LoadSel : STD_LOGIC_VECTOR (2 downto 0);  -- load selector for the 4 way 4 bit mux
     
         --Data Signals
         --RegisterBank
@@ -219,7 +231,7 @@ component Register_Bank is
     
         --Instruction Decoder
         Signal M : STD_LOGIC_VECTOR(3 downto 0);  -- immidiate value
-        Signal I : STD_LOGIC_VECTOR(12 downto 0);
+        Signal I : STD_LOGIC_VECTOR(12 downto 0);  -- instruction
         
         Signal comp_activ : STD_LOGIC; -- select to happen the comapare
         
@@ -233,7 +245,14 @@ component Register_Bank is
         Signal Equal_sig: STD_LOGIC;
         Signal LesserThan_sig: STD_LOGIC;
         
-
+        --Outputs of the Bit Shifters
+        Signal Left_Shift : STD_LOGIC_VECTOR(3 downto 0);
+        Signal Right_Shift : STD_LOGIC_VECTOR(3 downto 0);
+        
+        --Connected but no use
+        Signal no_use_1 : STD_LOGIC_VECTOR(3 downto 0);
+        Signal no_use_2 : STD_LOGIC_VECTOR(3 downto 0);
+        
 begin
 
 --Slow_Clk_Check <= Slow_Clk_Sig;
@@ -256,8 +275,8 @@ add_sub_unit_4bit : Add_Sub_Unit
 --mux_2_way_4bit : Two_way_4_bit_Mux
 --    port map(M, R, LoadSel, D);
     
-mux_4_way_4_bit : four_way_4_bit_mux
-    port map(M, R, N, P, LoadSel, D);
+mux_8_way_4_bit_2 : Eight_way_4_bit_Mux
+    port map(LoadSel, M, R, N, P, Left_Shift , Right_Shift, no_use_1 , no_use_2, D);
     
 Ins_dec : Instruction_Decoder
     port map(I, Eight_way_mux0_out, Reg_EN, LoadSel, M, Eight_way_mux0_Sel, Eight_way_mux1_Sel, Add_Sub_Sel, JumpFlag, Ins_Address_frm_Pgrm, comp_activ);
@@ -274,7 +293,12 @@ multiplier_unit : Multiplier_2
 comparator_unit : Comparator_4bit 
     port map (Eight_way_mux0_out, Eight_way_mux1_out, GreaterThan_sig, Equal_sig, LesserThan_sig, P);
     
-   
+left_bit_shifter_unit : L_Bit_Shift
+    port map (Eight_way_mux0_out, Left_Shift); 
+    
+right_bit_shifter_unit : R_Bit_Shift
+    port map (Eight_way_mux0_out, Right_Shift);  
+    
 PROM : Program_ROM
     port map(Memory_Selector, I);
     
@@ -292,13 +316,13 @@ Seven_Segment : AU_7_seg
     C_LED(1) <= Equal_sig AND comp_activ; 
     C_LED(2) <= LesserThan_sig AND comp_activ;
 
---    reg_0_out_check <= R_0_out; -- these lines are connected with the signals in the entity
---    reg_1_out_check <= R_1_out; -- declaration or uncomment only if the previously mentioned signsld are
---    reg_2_out_check <= R_2_out; -- uncommented
---    reg_3_out_check <= R_3_out;
---    reg_4_out_check <= R_4_out;
---    reg_5_out_check <= R_5_out;
---    reg_6_out_check <= R_6_out;
---    reg_7_out_check <= R_7_out;
+    reg_0_out_check <= R_0_out; -- these lines are connected with the signals in the entity
+    reg_1_out_check <= R_1_out; -- declaration or uncomment only if the previously mentioned signsld are
+    reg_2_out_check <= R_2_out; -- uncommented
+    reg_3_out_check <= R_3_out;
+    reg_4_out_check <= R_4_out;
+    reg_5_out_check <= R_5_out;
+    reg_6_out_check <= R_6_out;
+    reg_7_out_check <= R_7_out;
 
 end Behavioral;
