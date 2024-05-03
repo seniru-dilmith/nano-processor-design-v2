@@ -92,6 +92,10 @@ begin
                 comp <= '1';
                 Jmp <= '0';
                 
+--            when "110" =>
+            
+--            when "111" => 
+            
             when others =>
                 -- all the possible cases are mentioned sbove
         end case;
