@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date: 25.04.2024 21:12:07
+-- Create Date: 03.05.2024 19:49:44
 -- Design Name: 
--- Module Name: test - Behavioral
+-- Module Name: R_Bit_Shift - Behavioral
 -- Project Name: 
 -- Target Devices: 
 -- Tool Versions: 
@@ -31,13 +31,18 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity test is
---  Port ( );
-end test;
+entity R_Bit_Shift is
+    Port ( Data_In : in STD_LOGIC_VECTOR (3 downto 0);
+           Data_Out : out STD_LOGIC_VECTOR (3 downto 0));
+end R_Bit_Shift;
 
-architecture Behavioral of test is
+architecture Behavioral of R_Bit_Shift is
 
 begin
 
+    Data_Out(0) <= Data_In(1);
+    Data_Out(1) <= Data_In(2);
+    Data_Out(2) <= Data_In(3);
+    Data_Out(3) <= '0';
 
 end Behavioral;
