@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date: 04/18/2024 07:39:55 PM
+-- Create Date: 03.05.2024 19:50:16
 -- Design Name: 
--- Module Name: Two_way_3_bit_Mux_Tb - Behavioral
+-- Module Name: L_Bit_Shift_TB - Behavioral
 -- Project Name: 
 -- Target Devices: 
 -- Tool Versions: 
@@ -31,35 +31,41 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity Two_way_4_bit_Mux_Tb is
+entity L_Bit_Shift_TB is
 --  Port ( );
-end Two_way_4_bit_Mux_Tb;
+end L_Bit_Shift_TB;
 
+architecture Behavioral of L_Bit_Shift_TB is
 
-architecture Behavioral of Two_way_4_bit_Mux_Tb is
-
-component Two_way_4_bit_Mux is
-    Port ( In0 : in STD_LOGIC_VECTOR (3 downto 0);
-           In1 : in STD_LOGIC_VECTOR (3 downto 0);
-           Sel : in STD_LOGIC;
-           Output : out STD_LOGIC_VECTOR (3 downto 0));
+component L_Bit_Shift is
+    Port ( Data_In : in STD_LOGIC_VECTOR (3 downto 0);
+           Data_Out : out STD_LOGIC_VECTOR (3 downto 0));
 end component;
-    signal In0,In1,Output : std_logic_vector (3 downto 0);
-    signal Sel : std_logic;
+
+signal Data_In_TB, Data_Out_TB : STD_LOGIC_VECTOR(3 downto 0);
 
 begin
-UUT : Two_way_4_bit_Mux port map (In0,In1,Sel,Output);
-process 
-begin
---    In0<= "1110";
-    In1<="1101";
-    sel<= '0';
-    wait for 100ns;
 
-    In0<= "1000";
-    In1<="1001";
-    sel<= '1';
-    wait for 100ns;
+UUT : L_Bit_Shift port map (Data_In_TB, Data_Out_TB);
+
+process
+begin
+
+    Data_In_TB <= "1010";
+    wait for 10 ns;
+    
+    Data_In_TB <= "1011";
+    wait for 10 ns;
+    
+    Data_In_TB <= "0111";
+    wait for 10 ns;
+    
+    Data_In_TB <= "1111";
+    wait for 10 ns;
+    
+    Data_In_TB <= "0010";
+    wait;
 
 end process;
+
 end Behavioral;

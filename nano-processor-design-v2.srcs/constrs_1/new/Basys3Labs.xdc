@@ -12,6 +12,13 @@ set_property PACKAGE_PIN U19 [get_ports {S_LED[2]}]
 	set_property IOSTANDARD LVCMOS33 [get_ports {S_LED[2]}]
 set_property PACKAGE_PIN V19 [get_ports {S_LED[3]}]
 	set_property IOSTANDARD LVCMOS33 [get_ports {S_LED[3]}]
+	
+set_property PACKAGE_PIN V13 [get_ports {C_LED[0]}]
+        set_property IOSTANDARD LVCMOS33 [get_ports {C_LED[0]}]
+set_property PACKAGE_PIN V3 [get_ports {C_LED[1]}]
+        set_property IOSTANDARD LVCMOS33 [get_ports {C_LED[1]}]
+set_property PACKAGE_PIN W3 [get_ports {C_LED[2]}]
+        set_property IOSTANDARD LVCMOS33 [get_ports {C_LED[2]}]	
 
 set_property PACKAGE_PIN P1 [get_ports {zero}]
 	set_property IOSTANDARD LVCMOS33 [get_ports {zero}]

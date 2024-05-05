@@ -34,23 +34,25 @@ use ieee.numeric_std.all;
 
 entity Program_ROM is
     Port ( address : in STD_LOGIC_VECTOR (2 downto 0);
-           data : out STD_LOGIC_VECTOR (11 downto 0));
+           data : out STD_LOGIC_VECTOR (12 downto 0));
 end Program_ROM;
 
 architecture Behavioral of Program_ROM is
 
-type rom_type is array (0 to 7) of std_logic_vector(11 downto 0);
+type rom_type is array (0 to 8) of std_logic_vector(12 downto 0);
 
     signal Instructions : rom_type := (
 
-        "101110000001", --0  MOVI R7 , 1
-        "101100000010", --1  MOVI R6 , 2
-        "101010000011", --2  MOVI R5 , 3
-        "001111100000", --3  ADD R7 , R6
-        "001111010000", --4  ADD R7 , R5
-        "110000000000", --5  JZR R0 , 0
-        "000000000000", --6  NULL
-        "000000000000"  --7  NULL
+        "0101110000010", --0  MOVI R7 , 2
+        "0101100000011", --1  MOVI R6 , 3
+        "0101010000101", --2  MOVI R5 , 5
+        "1011111100000", --3  CMP R7 , R6
+        "1001111100000", --4  MUL R7 , R6
+        "0001111010000", --5  ADD R7 , R5
+        "1101110000000", --6  SHL R7 , 1
+        "1111110000000", --7  SHR R7 , 1
+        "0110000000000"  --8  JZR R0 , 0
+        
     );
 
 begin

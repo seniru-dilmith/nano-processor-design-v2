@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date: 04/18/2024 07:21:34 PM
+-- Create Date: 03.05.2024 19:50:45
 -- Design Name: 
--- Module Name: Two_way_4_bit_Mux - Behavioral
+-- Module Name: R_Bit_Shift_TB - Behavioral
 -- Project Name: 
 -- Target Devices: 
 -- Tool Versions: 
@@ -31,22 +31,42 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity Two_way_4_bit_Mux is
-    Port ( In0 : in STD_LOGIC_VECTOR (3 downto 0);
-           In1 : in STD_LOGIC_VECTOR (3 downto 0);
-           output : out STD_LOGIC_VECTOR (3 downto 0);
-           Sel : in STD_LOGIC);
-end Two_way_4_bit_Mux;
+entity R_Bit_Shift_TB is
+--  Port ( );
+end R_Bit_Shift_TB;
 
-architecture Behavioral of Two_way_4_bit_Mux is
+architecture Behavioral of R_Bit_Shift_TB is
+
+
+component R_Bit_Shift is
+    Port ( Data_In : in STD_LOGIC_VECTOR (3 downto 0);
+           Data_Out : out STD_LOGIC_VECTOR (3 downto 0));
+end component;
+
+signal Data_In_TB, Data_Out_TB : STD_LOGIC_VECTOR(3 downto 0);
 
 begin
 
--- logics for the outputs of the multiplexer
-output(0) <= (In0(0) AND (NOT Sel)) OR (In1(0) AND Sel);
-output(1) <= (In0(1) AND (NOT Sel)) OR (In1(1) AND Sel);
-output(2) <= (In0(2) AND (NOT Sel)) OR (In1(2) AND Sel);
-output(3) <= (In0(3) AND (NOT Sel)) OR (In1(3) AND Sel);
+UUT : R_Bit_Shift port map (Data_In_TB, Data_Out_TB);
 
+process
+begin
+
+    Data_In_TB <= "1010";
+    wait for 10 ns;
+    
+    Data_In_TB <= "1011";
+    wait for 10 ns;
+    
+    Data_In_TB <= "0111";
+    wait for 10 ns;
+    
+    Data_In_TB <= "1111";
+    wait for 10 ns;
+    
+    Data_In_TB <= "0010";
+    wait;
+
+end process;
 
 end Behavioral;
